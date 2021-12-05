@@ -7,32 +7,69 @@ private fun input(): List<List<Int>> {
     }
 }
 
-private fun bytesAtPositions(): Map<Int, List<Int>> {
+private fun bytesAtPositions(sequences: List<List<Int>>): Map<Int, List<Int>> {
     val bytesAtPositions = mutableMapOf<Int, List<Int>>()
-    val codes = input()
 
-    for (index in 0 until codes[0].size) {
-        bytesAtPositions[index] = codes.map { it[index] }
+    for (index in 0 until sequences[0].size) {
+        bytesAtPositions[index] = sequences.map { it[index] }
     }
 
     return bytesAtPositions
 }
 
-private fun gamma(): List<Int> {
-    return bytesAtPositions().map { (position, bytes) ->
-        if (bytes.count { it == 0 } > bytes.count { it == 1 }) {
-            0
-        } else {
-            1
-        }
+private fun mostPopularByte(bytes: List<Int>): Int {
+    return if (bytes.count { it == 0 } > bytes.count { it == 1 }) {
+        0
+    } else {
+        1
     }
 }
+
+private fun leastPopularByte(bytes: List<Int>): Int {
+    return if (bytes.count { it == 0 } <= bytes.count { it == 1 }) {
+        0
+    } else {
+        1
+    }
+}
+
+private fun gamma(): List<Int> {
+    return bytesAtPositions(input()).map { (_, bytes) ->
+        mostPopularByte(bytes)
+    }
+}
+
+private fun rating(moreWins: Boolean, selectionFunction: (List<Int>) -> Int): List<Int> {
+    var numbers = input()
+    var index = 0
+    while (numbers.size > 1) {
+        val selectedByte = selectionFunction(numbers.map { it[index] })
+        numbers = numbers.filter { it[index] == selectedByte }
+        index += 1
+    }
+
+    return numbers[0]
+}
+
+private fun oxygenRating(): List<Int> {
+    return rating(true, ::mostPopularByte)
+}
+
+private fun carbonRating(): List<Int> {
+    return rating(false, ::leastPopularByte)
+}
+
 
 private fun partOne(): Int {
     val gamma = gamma().joinToString("").toInt(2)
     return gamma * (gamma.inv() + 2.toDouble().pow(12).toInt())
 }
 
-fun main(args: Array<String>) {
+private fun partTwo(): Int {
+    return oxygenRating().joinToString("").toInt(2) * carbonRating().joinToString("").toInt(2)
+}
+
+private fun main(args: Array<String>) {
     println(partOne())
+    println(partTwo())
 }
