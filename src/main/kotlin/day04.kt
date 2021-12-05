@@ -90,10 +90,10 @@ private fun loser(boards: List<Board>): Pair<Boolean, Board?> {
         }
     }
 
-    if (winners.count { !it } == 1) {
-        return Pair(true, boards[winners.indexOf(false)])
+    return if (winners.count { !it } == 1) {
+        Pair(true, boards[winners.indexOf(false)])
     } else {
-        return Pair(false, null)
+        Pair(false, null)
     }
 }
 
@@ -109,7 +109,7 @@ private fun loserScore(numbers: List<Int>, boards: List<Board>): Int {
     return winnerScore(numbers.drop(index), listOf(loser(afterRoundBoards).second!!))
 }
 
-fun main(args: Array<String>) {
+private fun main(args: Array<String>) {
     val input = input()
 
     println(winnerScore(input.first, input.second))
