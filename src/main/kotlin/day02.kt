@@ -28,7 +28,7 @@ private fun partTwo(): Triple<Int, Int, Int> {
     }
 }
 
-fun main(args: Array<String>) {
+private fun main(args: Array<String>) {
     println(partOne().first * partOne().second)
     println(partTwo().first * partTwo().second)
 }
