@@ -52,7 +52,7 @@ private fun markDiagonalLines(grid: Grid): Grid {
 }
 
 
-fun main() {
+private fun main() {
     println(markRightLines().values.count { it > 1 })
     println(markDiagonalLines(markRightLines()).values.count { it > 1 })
 }
