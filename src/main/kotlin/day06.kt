@@ -19,7 +19,7 @@ private fun amountOfLanterns(internalTimer: Int, day: Int): Long {
     }
 }
 
-fun main() {
+private fun main() {
     println(input().sumOf { amountOfLanterns(it, 81) })
     println(input().sumOf { amountOfLanterns(it, 257) })
 }
